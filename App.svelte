@@ -1,48 +1,88 @@
 <script>
   import { onMount } from "svelte";
   import Grid from "gridjs-svelte";
+  /**
+   * weird things abour gridJs
+   * it doesnt seem to read values of coliumns with capital letters
+   */
 
-  let current;
   let resData;
   let data = [];
+  let current;
 
-  onMount(async () => {
+  const MTL_EP = "http://43.205.241.105:8080/api/mtl/getAllMoney";
+  const MAL_EP = "http://43.205.241.105:8080/api/mal/getAllAssetInvestments";
+
+  const convertToLowerCase = (obj) => {
+    return Object.keys(obj).reduce((acc, key) => {
+      acc[key.toLowerCase()] = obj[key];
+      return acc;
+    }, {});
+  };
+
+  const fetchMALData = async () => {
+    const responseFromMAL = await fetch(MAL_EP);
+
+    resData = await responseFromMAL.json();
+
+    console.log("resData", resData);
+    data = resData.map((data) => {
+      return convertToLowerCase(data);
+    });
+
+    console.log("TR DA", data);
+  };
+
+  const fetchMTLData = async () => {
     // api -> use your employee API
-    const response = await fetch(
-      "https://hub.dummyapis.com/employee?noofRecords=6&idStarts=1001"
-    );
+    const responseFromMTL = await fetch(MTL_EP);
 
-    resData = await response.json();
-    console.log(resData);
+    resData = await responseFromMTL.json();
 
-    data = resData;
-  });
+    data = resData.map((data) => {
+      return convertToLowerCase(data);
+    });
+
+    console.log(data);
+
+    current = "MAL";
+  };
+
+  const handleClick = async (e) => {
+    const BTN_NAME = e.target.textContent;
+    // console.log(BTN_NAME === "MAL");
+
+    if (BTN_NAME === "MAL") {
+      // call MTL FETCH
+      await fetchMALData();
+    } else {
+      // call MAL FTECH
+      await fetchMTLData();
+    }
+  };
 </script>
 
-<!-- // ADD -> a search bar and a refersh icon -->
-<!-- <input style=""
-type="text"
-name="searchbar"
-placeholder="Search..."
-/> -->
+<div class="buttons">
+  <button
+    class={current === "MTL" ? "selected" : ""}
+    on:click={(e) => handleClick(e)}>MTL</button
+  >
+  <button
+    class={current === "MAL" ? "selected_two" : ""}
+    on:click={async (e) => await handleClick(e)}>MAL</button
+  >
+</div>
 
-<!-- <i class="mi mi-undo" on:click="{()=> {data = resData}}"></i> -->
+<div class="refresh">
+  <i
+    class="mi mi-undo"
+    on:click={() => {
+      data = resData;
+    }}
+  />
+</div>
 
-<div class ="buttons">
-  <button class="{current === 'MTL' ? 'selected' : ''}"
-    on:click="{() => current = 'MTL'}">MTL</button>
-  <button class="{current === 'MAL' ? 'selected_two' : ''}"
-    on:click="{() => current = 'MAL'}" >MAL</button>
-  </div>
-  
-  <div class="refresh">
-  <i class="mi mi-undo" on:click="{()=> {data = resData}}"></i>
-  </div>
-
-<Grid data={data} 
- search  
- pagination={{ enabled:true, limit: 3 }}
-/>
+<Grid {data} search pagination={{ enabled: true, limit: 3 }} />
 
 <style>
   @import "https://cdn.jsdelivr.net/npm/gridjs/dist/theme/mermaid.min.css";
