@@ -935,16 +935,16 @@ var app = (function () {
     			i = element("i");
     			t4 = space();
     			create_component(grid.$$.fragment);
-    			attr_dev(button0, "class", button0_class_value = "" + (null_to_empty(/*current*/ ctx[1] === "MTL" ? "selected" : "") + " svelte-6h2s5o"));
+    			attr_dev(button0, "class", button0_class_value = "" + (null_to_empty(/*current*/ ctx[1] === "MTL" && "selected") + " svelte-c57t1p"));
     			add_location(button0, file$1, 26, 2, 615);
-    			attr_dev(button1, "class", button1_class_value = "" + (null_to_empty(/*current*/ ctx[1] === "MAL" ? "selected_two" : "") + " svelte-6h2s5o"));
-    			add_location(button1, file$1, 30, 2, 726);
-    			attr_dev(div0, "class", "buttons svelte-6h2s5o");
+    			attr_dev(button1, "class", button1_class_value = "" + (null_to_empty(/*current*/ ctx[1] === "MAL" && "selected_two") + " svelte-c57t1p"));
+    			add_location(button1, file$1, 30, 2, 722);
+    			attr_dev(div0, "class", "buttons svelte-c57t1p");
     			add_location(div0, file$1, 25, 0, 591);
-    			attr_dev(i, "class", "mi mi-undo svelte-6h2s5o");
-    			add_location(i, file$1, 37, 2, 883);
-    			attr_dev(div1, "class", "refresh svelte-6h2s5o");
-    			add_location(div1, file$1, 36, 0, 859);
+    			attr_dev(i, "class", "mi mi-undo svelte-c57t1p");
+    			add_location(i, file$1, 37, 2, 875);
+    			attr_dev(div1, "class", "refresh svelte-c57t1p");
+    			add_location(div1, file$1, 36, 0, 851);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");

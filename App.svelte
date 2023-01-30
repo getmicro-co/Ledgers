@@ -25,11 +25,11 @@
 
 <div class="buttons">
   <button
-    class={current === "MTL" ? "selected" : ""}
+    class={current === "MTL" && "selected"}
     on:click={(e) => handleClick(e)}>MTL</button
   >
   <button
-    class={current === "MAL" ? "selected_two" : ""}
+    class={current === "MAL" && "selected_two"}
     on:click={async (e) => await handleClick(e)}>MAL</button
   >
 </div>
@@ -103,12 +103,6 @@
 
   .selected {
     background-color: rgb(245, 71, 71);
-    color: black;
-    font-weight: bold;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-  }
-  .selected_two {
-    background-color: rgb(243, 125, 7);
     color: black;
     font-weight: bold;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
