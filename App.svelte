@@ -1,12 +1,12 @@
 <script>
   import { onMount } from "svelte";
   import Grid from "gridjs-svelte";
-  import { fetchMALData, fetchMTLData } from "./utils/index";
+  import { fetchMALData, fetchMTLData} from "./utils/index";
   /**
    * weird things abour gridJs
    * it doesnt seem to read values of coliumns with capital letters
    */
-  let current;
+  let current= 'MAL';
   let data = [];
 
   const handleClick = async (e) => {
@@ -14,32 +14,34 @@
     // console.log(BTN_NAME === "MAL");
 
     if (BTN_NAME === "MAL") {
-      // call MTL FETCH
+      // call MAL FETCH
       data = await fetchMALData();
+      current = 'MAL';
     } else {
-      // call MAL FTECH
+      // call MTL FETCH
       data = await fetchMTLData();
+      current = 'MTL';
     }
   };
 </script>
 
 <div class="buttons">
   <button
-    class={current === "MTL" && "selected"}
+    class={current === 'MTL' && 'selected'}
     on:click={(e) => handleClick(e)}>MTL</button
   >
   <button
-    class={current === "MAL" && "selected_two"}
+    class={current === 'MAL' && 'selected'}
     on:click={async (e) => await handleClick(e)}>MAL</button
   >
 </div>
 
 <div class="refresh">
-  <i
-    class="mi mi-undo"
-    on:click={() => {
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <i class="mi mi-undo"
+    on:click={() => { 
       // data = resData;
-    }}
+}}
   />
 </div>
 
@@ -47,25 +49,10 @@
 
 <style>
   @import "https://cdn.jsdelivr.net/npm/gridjs/dist/theme/mermaid.min.css";
-  /* input{
-                  margin:15px;
-                  width:170px;
-                  height:25px;
-                  font-weight:bold;
-                  background:#F5F6FA;
-                  border-radius:5px;
-                  border:1px solid #c4c5c8;
-                  outline:none;
-                }
-                input:hover{
-                  background: lightgray;
-                  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-                } */
 
   .mi {
     font-size: 1.4rem;
     float: right;
-    /* margin-bottom: -40px; */
     cursor: pointer;
     background: #e6e7eb;
     padding: 3px;
@@ -102,9 +89,8 @@
   }
 
   .selected {
-    background-color: rgb(245, 71, 71);
-    color: black;
-    font-weight: bold;
+    background-color: #555555;
+    color: white;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
   }
 
